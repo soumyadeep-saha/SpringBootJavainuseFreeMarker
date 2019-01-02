@@ -1,0 +1,171 @@
+SpringBootJavainuseFreeMarker
+
+For freemarker, do not keep spring-boot-starter-web dependency, remove starter-web
+
+What is FreeMarker? Why use it ?
+
+FreeMarker is a Java-based Template Engine, originally focusing on dynamic web page generation with MVC software architecture. The major advantage of using Freemarker is the complete separation of the Presentation layer and the Business Layer. The Programmers can work on the application code while the designers can work on the html page design. Finally using freemarker these can then be combined to give the final output page.
+
+Add dependency
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-freemarker</artifactId>
+</dependency>
+
+Add main class
+
+Add controller
+@Controller
+public class TestController {
+    @RequestMapping("/welcome")
+    public String hello(Model model, @RequestParam(value="name", required=false, defaultValue="World") String name) {
+        model.addAttribute("name", name);
+        return "welcome";
+    }
+}
+
+Add in application.properties
+spring.freemarker.template-loader-path: /
+spring.freemarker.suffix: .ftl
+
+Add welcome.ftl under webapp
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World !</title>
+</head>
+<body>
+    <h2>Hello World!</h2>
+</body>
+</html>
+
+
+
+Spring Boot + FreeMarker Hello World Example
+
+
+In this post we will integrate Spring Boot and FreeMarker to display a simple welcome page.
+Video
+
+This tutorial is explained in the below Youtube Video.
+
+
+What is FreeMarker? Why use it ?
+
+FreeMarker is a Java-based Template Engine, originally focusing on dynamic web page generation with MVC software architecture. The major advantage of using Freemarker is the complete separation of the Presentation layer and the Business Layer. The Programmers can work on the application code while the designers can work on the html page design. Finally using freemarker these can then be combined to give the final output page.
+Features of FreeMarker
+
+Powerful template language: Conditional blocks, iterations, assignments, string and arithmetic operations and formatting, macros and functions, including other templates, escaping by default (optional), and many more
+Multipurpose and lightweight: Zero dependencies, any output format, can load templates from any place (pluggable), many configuration options
+Internationalization/localization-aware: Locale sensitive number and date/time formatting, localized template variations.
+XML processing capabilities: Drop XML DOM-s into the data-model and traverse them, or even process them declaratively
+Versatile data-model: Java objects are exposed to the template as a tree of variables through pluggable adapters, which decides how the template sees them.
+In this post we will be creating the Template and Java Object containing the data. Using FreeMarker, the final output page will then be displayed.
+
+Lets Begin-
+
+Maven project will be as follows -
+
+We have added the FreeMarker starter dependency-
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.javainuse</groupId>
+	<artifactId>SpringBootFreeMarkerHelloWorld</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>SpringBootFreeMarkerHelloWorld</name>
+	<description>Demo project for Spring Boot</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.4.1.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-freemarker</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>
+
+		
+
+ 
+Create the SpringBootHelloWorldApplication.java as below-
+package com.javainuse;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SpringBootHelloWorldApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringBootHelloWorldApplication.class, args);
+	}
+}
+
+@RequestMapping maps /welcome request to firstPage() method.
+package com.javainuse.controllers;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class TestController {
+    @RequestMapping("/welcome")
+    public String hello(Model model, @RequestParam(value="name", required=false, defaultValue="World") String name) {
+        model.addAttribute("name", name);
+        return "welcome";
+    }
+}
+
+In the application.properties we define the prefix and suffix as follows. So in the above controller the /welcome correctly maps to /welcome.ftl.
+spring.freemarker.template-loader-path: /
+spring.freemarker.suffix: .ftl
+
+Last we define the welcome.ftl as below-
+	
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World !</title>
+</head>
+<body>
+    <h2>Hello World!</h2>
+</body>
+</html>
+Compile and the run the SpringBootHelloWorldApplication.java as a Java application.
+Go to localhost:8080/welcome
+Download Source Code
+Download it -
+Spring Boot + FreeMarker Hello World Application
